@@ -40,6 +40,16 @@ public class Game {
         return this.player;
     }
 
+    public Game undo() {
+        if (this.history.isEmpty()) {
+            return this;  // No history, cannot undo
+        }
+        // Go back to the last valid state in the history
+        Game previousGame = this.history.get(this.history.size() - 1);
+        return new Game(previousGame.getBoard(), previousGame.getPlayer(), previousGame.history.subList(0, previousGame.history.size() - 1));
+    }
+
+
     public Game play(int x, int y) {
         if (this.board.getCell(x, y) != null)
             return this;
